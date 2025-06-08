@@ -1,4 +1,4 @@
-#  Perspective Crop Layers (PCL) – Refactored and Improved for Python 3.9+
+#  Perspective Crop Layers (PCL) – This repository makes code modular and working for higher environment dependecies
 
 This repository improves and modernizes the official implementation of the **CVPR 2020 paper**:
 
