@@ -57,7 +57,7 @@ conda create -n pcl python=3.9 -y
 conda activate pcl
 
 # 2. Install dependencies
-pip install -r requirements.txt
+pip install -r req_new.txt
 
 # 3. (Optional) Enable Jupyter kernel for this environment
 pip install ipykernel jupyterlab
