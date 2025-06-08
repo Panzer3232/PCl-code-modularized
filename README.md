@@ -46,4 +46,19 @@ dataset_config = get_dataset_config("H36m")
 mean_3d = dataset_config.get_joint_mean()
 std_2d, mean_2d = dataset_config.get_2d_mean_std(slant=True, stn=False)
 canonical_pose = dataset_config.to_canonical(pose_2d)
+```
+## ⚙ Installation (Python 3.9 with Conda)
 
+To set up the environment:
+
+```bash
+# 1. Create and activate a new Conda environment
+conda create -n pcl python=3.9 -y
+conda activate pcl
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. (Optional) Enable Jupyter kernel for this environment
+pip install ipykernel jupyterlab
+python -m ipykernel install --user --name=pcl --display-name "Python (PCL)"
