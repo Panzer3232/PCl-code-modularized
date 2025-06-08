@@ -7,7 +7,7 @@ This is repositroy is from the original [Perspective Crop Layers (PCL)](https://
 
 ---
 
-## 🚀 Python 3.9 Compatibility and Dependency Fixes
+## Python 3.9 Compatibility and Dependency Fixes
 
 The original repository was written for **Python 3.6** and uses outdated libraries (e.g. `torch._six`). To ensure reproducibility and compatibility with modern systems:
 
