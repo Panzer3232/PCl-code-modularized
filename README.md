@@ -12,7 +12,7 @@ This is repositroy is from the original [Perspective Crop Layers (PCL)](https://
 The original repository was written for **Python 3.6** and uses outdated libraries (e.g. `torch._six`). To ensure reproducibility and compatibility with modern systems:
 
 - Migrated codebase to **Python 3.9**
-- Rebuilt all requirements in `new_req.txt`
+- Rebuilt all requirements in `req_new.txt`
 - Updated deprecated/removed modules
 
 ### Fix for `torch._six` Removal
@@ -30,7 +30,7 @@ One key fix applied is the replacement of deprecated imports in `margipose/data/
 
 #### 1. `config_data.py`: Unified Dataset Configuration
 
-We introduced a new module `config_data.py` to handle all dataset-specific configurations, making it easy to plug in additional datasets or update parameters without modifying the main pipeline.
+Introduced a new module `config_data.py` to handle all dataset-specific configurations, making it easy to plug in additional datasets or update parameters without modifying the main pipeline.
 
 ##### Features:
 - Canonical skeleton conversion
@@ -62,3 +62,17 @@ pip install -r req_new.txt
 # 3. (Optional) Enable Jupyter kernel for this environment
 pip install ipykernel jupyterlab
 python -m ipykernel install --user --name=pcl --display-name "Python (PCL)"
+
+```
+
+## Role of config_data.py
+The file config_data.py introduces object-oriented modularity by encapsulating dataset specific logic into polymorphic classes:
+ - H36mConfig and MPI3DHPConfig both inherit from DatasetConfig.
+ - Each config handles its own mean, std, and canonicalization.
+ - The factory get_dataset_config(name) dynamically returns the correct class
+   
+This design enables:
+ - Consistent access to normalization and canonical joint order.
+ - Cleaner high-level logic (e.g., preprocessing) without if dataset == ... clutter.
+ - Easy support for new datasets with minimal changes
+
