@@ -93,3 +93,36 @@ The repository includes a Dockerfile and Makefile for easy reproducibility, depe
 # 4. make clean         # Remove intermediate Docker artifacts
 ```
 It should look like this ![Docker Container](imgs/Screenshot%20from%202025-06-19%2023-39-42.png)
+
+### Singularity Support for SLURM HPC
+Since Docker requires root privileges and cannot run directly on most SLURM clusters, this repo also supports Singularity.
+Steps to use Docker image with Singularity on HPC:
+1. Initialize your Docker VM on HPC system. For ELwetritsch system 
+   
+```bash
+# 1. rz-docker init     # Only needed once
+# 2. rz-docker check    # Check if VM is ready
+# 3. rz-docker login    # Enter your personal Docker VM
+```
+2. Build and save Docker image.
+3. Transfer the image to the cluster using scp or rsync commands.
+4. Convert the Docker image to a Singularity image: Example below
+```bash
+singularity build pcl-train.simg docker-archive:///work/your_username/pcl-train.tar
+
+```
+5. Run the converted image with Singularity `singularity run pcl-train.simg`
+6. Submit via SLURM using Singularity. Example script
+```bash
+#!/bin/bash
+#SBATCH -t 2-00:00:00
+#SBATCH --mem=32G
+#SBATCH --gres=gpu:1
+#SBATCH -J PCLTrain
+#SBATCH --output=pcl_train_%j.out
+
+module load singularity
+singularity exec --nv /work/your_username/pcl-train.simg conda run -n pcl_env python train.py
+
+```
+   
