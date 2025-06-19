@@ -1,17 +1,22 @@
-.PHONY: test train docker clean
+.PHONY: test docker run-docker test-docker clean
 
-# Run all unit tests
+# Run all unit tests locally
 test:
-	pytest tests/
-
-# Run the training script (override dataset path if needed)
-train:
-	python train1.py 
+	pytest ../tests/
 
 # Build Docker image from Dockerfile
 docker:
 	docker build -t pcl-train .
 
-# Clean cached Docker artifacts
+# Run Docker container interactively
+run-docker:
+	docker run -it --rm pcl-train
+
+# Run unit tests inside Docker container
+test-docker:
+	docker run -it --rm pcl-train conda run --no-capture-output -n pcl_env pytest tests/
+
+# Clean cached Docker artifacts and unused images
 clean:
 	rm -f pcl-train.tar
+	docker image prune -f
