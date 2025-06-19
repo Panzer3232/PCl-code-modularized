@@ -14,10 +14,7 @@ ninja==1.11.1
 six==1.16.0
 pyzmq==25.1.0
 pytest==7.4.0
-<<<<<<< HEAD
-=======
 h5py==3.10.0
->>>>>>> 82eba86 (Initial commit: Docker + Makefile + training + tests+ codefiles)
 
 ipython==8.12.0
 ipywidgets==8.1.7
