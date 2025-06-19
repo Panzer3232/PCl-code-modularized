@@ -28,6 +28,8 @@ One key fix applied is the replacement of deprecated imports in `margipose/data/
 
 ###  Key Improvements
 
+Changes successfuly tested in humanPose-demo1.ipynb file.
+
 #### 1. `config_data.py`: Unified Dataset Configuration
 
 Introduced a new module `config_data.py` to handle all dataset-specific configurations, making it easy to plug in additional datasets or update parameters without modifying the main pipeline.
