@@ -31,6 +31,7 @@ One key fix applied is the replacement of deprecated imports in `margipose/data/
 #### 1. `config_data.py`: Unified Dataset Configuration
 
 Introduced a new module `config_data.py` to handle all dataset-specific configurations, making it easy to plug in additional datasets or update parameters without modifying the main pipeline.
+These files codeis modularized :- train.py, runner.py, runner_utils.py, model.py
 
 ##### Features:
 - Canonical skeleton conversion
@@ -66,8 +67,8 @@ To set up the environment:
 
 ```bash
 # 1. Create and activate a new Conda environment
-conda create -n pcl python=3.9 -y
-conda activate pcl
+conda create -n pcl_env python=3.9 -y
+conda activate pcl_env
 
 # 2. Install dependencies
 pip install -r req_new.txt
@@ -82,4 +83,13 @@ This repository supports use on HPC systems with SLURM. To prepare your environm
 
 Similarly as explained create venv and install req_new.txt in your HPC system. To run training, use the provided SLURM batch script(proposed script) `run_code.sbatch`. Replace the dataset path in the script to match your cluster directory structure.
 
+## Using Docker and Makefile
+The repository includes a Dockerfile and Makefile for easy reproducibility, dependency isolation, and testing. I have written a unit test located in `tests/test_runner.py` which validates forward pass of `LinearModel` using mock 2D input to see everything works correctly. Below are the make commands to create docker image and run the container.
+
+```bash
+# 1. make docker  # Build the Docker image 'pcl-train'
+# 2. make run-docker  # Run an interactive container using that image
+# 3. make test-docker   # Run tests inside Docker
+# 4. make clean         # Remove intermediate Docker artifacts
+```
 
