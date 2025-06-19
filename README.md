@@ -1,4 +1,4 @@
-#  Perspective Crop Layers (PCL) – This repository makes code modular and working for higher environment dependecies
+#  Perspective Crop Layers (PCL) – This repository makes code modular and working for higher environment dependecies and docker,HPC integration explained
 
 This is repositroy is from the original [Perspective Crop Layers (PCL)](https://github.com/yu-frank/PerspectiveCropLayers) repository introduces a modular, scalable, and maintainable design for handling multiple human pose estimation datasets, including Human3.6M and MPI-INF-3DHP.
 
@@ -37,6 +37,7 @@ Introduced a new module `config_data.py` to handle all dataset-specific configur
 - Access to mean/std for both 2D and 3D normalization
 - Dynamic switching between STN (rectangular crop) and PCL (virtual camera crop) statistics
 - Extensible for additional datasets
+- Device-aware normalization using `get_mean_std_normalized(device)`
 
 ##### Example:
 ```python
@@ -47,6 +48,18 @@ mean_3d = dataset_config.get_joint_mean()
 std_2d, mean_2d = dataset_config.get_2d_mean_std(slant=True, stn=False)
 canonical_pose = dataset_config.to_canonical(pose_2d)
 ```
+## Role of config_data.py
+The file config_data.py introduces object-oriented modularity by encapsulating dataset specific logic into polymorphic classes:
+ - H36mConfig and MPI3DHPConfig both inherit from DatasetConfig.
+ - Each config handles its own mean, std, and canonicalization.
+ - The factory get_dataset_config(name) dynamically returns the correct class
+   
+This design enables:
+ - Consistent access to normalization and canonical joint order.
+ - Cleaner high-level logic (e.g., preprocessing) without if dataset == ... clutter.
+ - Easy support for new datasets with minimal changes
+
+
 ## ⚙ Installation (Python 3.9 with Conda)
 
 To set up the environment:
@@ -64,15 +77,9 @@ pip install ipykernel jupyterlab
 python -m ipykernel install --user --name=pcl --display-name "Python (PCL)"
 
 ```
+### SLURM HPC Environment Setup
+This repository supports use on HPC systems with SLURM. To prepare your environment:
 
-## Role of config_data.py
-The file config_data.py introduces object-oriented modularity by encapsulating dataset specific logic into polymorphic classes:
- - H36mConfig and MPI3DHPConfig both inherit from DatasetConfig.
- - Each config handles its own mean, std, and canonicalization.
- - The factory get_dataset_config(name) dynamically returns the correct class
-   
-This design enables:
- - Consistent access to normalization and canonical joint order.
- - Cleaner high-level logic (e.g., preprocessing) without if dataset == ... clutter.
- - Easy support for new datasets with minimal changes
+Similarly as explained create venv and install req_new.txt in your HPC system. To run training, use the provided SLURM batch script(proposed script) `run_code.sbatch`. Replace the dataset path in the script to match your cluster directory structure.
+
 
