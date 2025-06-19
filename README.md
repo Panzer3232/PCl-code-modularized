@@ -92,4 +92,4 @@ The repository includes a Dockerfile and Makefile for easy reproducibility, depe
 # 3. make test-docker   # Run tests inside Docker
 # 4. make clean         # Remove intermediate Docker artifacts
 ```
-
+It should look like this ![Docker Container](imgs/Screenshot%20from%202025-06-19%2023-39-42.png)
