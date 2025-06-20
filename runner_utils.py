@@ -5,6 +5,7 @@ from config_data import DatasetConfig
 from utils import denorm_human_joints, batch_normalize_canon_human_joints
 
 def pcl_postprocess(batch_size, num_joints, output, R_virt2orig, device, dataset_cfg: DatasetConfig):
+    #MEan,std dataset specific handled in config_data.py and no need to call .to(device) again and again
     mean = dataset_cfg.get_joint_mean().to(device)
     std = dataset_cfg.get_joint_std().to(device)
 
