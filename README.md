@@ -83,7 +83,7 @@ python -m ipykernel install --user --name=pcl --display-name "Python (PCL)"
 ### SLURM HPC Environment Setup
 This repository supports use on HPC systems with SLURM. To prepare your environment:
 
-Similarly as explained create venv and install req_new.txt in your HPC system. To run training, use the provided SLURM batch script(proposed script) `run_code.sbatch`. Replace the dataset path in the script to match your cluster directory structure.
+Similarly as explained create venv and install req_new.txt in your HPC system. To run training, use the provided SLURM batch script(proposed script) `run_code.sbatch`. Replace the dataset path in the script to match your cluster dataset directory path.
 
 ## Using Docker and Makefile
 The repository includes a Dockerfile and Makefile for easy reproducibility, dependency isolation, and testing. I have written a unit test located in `tests/test_runner.py` which validates forward pass of `LinearModel` using mock 2D input to see everything works correctly. Below are the make commands to create docker image and run the container.
