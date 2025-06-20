@@ -26,7 +26,7 @@ def runner_2d3d(epoch, data_loader, model, optimizer, loss_fn, device, use_datas
         P_px = data['perspective_matrix'] 
         location_px = data['crop_location'].float()
         scale_px = data['crop_scale'].float()
-        label_2d_px = data['pose2d_original']
+        label_2d_px = data['pose2d_original'] #no hip location removal, 32x2
 
         square_scale = torch.tensor([torch.max(scale_px.squeeze(0)), torch.max(scale_px.squeeze(0))])
         square_scale_py = square_scale / data['original_img_shape'].squeeze(0)
@@ -39,7 +39,7 @@ def runner_2d3d(epoch, data_loader, model, optimizer, loss_fn, device, use_datas
         else:
             hips = hips = label_2d_px[:,14,:].unsqueeze(1).repeat(1,label_2d_px.shape[1],1)
         label_2d_no_hip = label_2d_px - hips
-
+        #Canonical handld in config_data.py
         canon_label_2d = dataset_cfg.to_canonical(label_2d_no_hip).to(device)
         canon_label_3d = dataset_cfg.to_canonical(label).to(device)
         label_no_norm = dataset_cfg.to_canonical(label_no_norm)
@@ -54,6 +54,7 @@ def runner_2d3d(epoch, data_loader, model, optimizer, loss_fn, device, use_datas
         else:
             model_input = canon_label_2d.detach().clone()
             model_input = model_input / scale_py.unsqueeze(1).to(device)
+            #Mean,std calculated in config_data.py with dataset configuration
             mean, std = dataset_cfg.get_mean_std_normalized(device, slant=slant_compensation, use_pcl=False)
             model_input = utils.batch_normalize_canon_human_joints(model_input, mean, std)
             model_input = model_input.view(bs, -1)
@@ -71,6 +72,7 @@ def runner_2d3d(epoch, data_loader, model, optimizer, loss_fn, device, use_datas
         else:
             output = output.view(canon_label_3d.shape[0], -1, 3)
             if denormalize_during_training:
+                #Handled in config_data.py
                 mean_3d = dataset_cfg.get_joint_mean().to(device)
                 std_3d = dataset_cfg.get_joint_std().to(device)
                 output = utils.denorm_human_joints(output, mean_3d, std_3d)
