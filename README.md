@@ -77,7 +77,7 @@ pip install -r req_new.txt
 
 # 3. (Optional) Enable Jupyter kernel for this environment
 pip install ipykernel jupyterlab
-python -m ipykernel install --user --name=pcl --display-name "Python (PCL)"
+python -m ipykernel install --user --name=pcl_env --display-name "Python (PCL)"
 
 ```
 ### SLURM HPC Environment Setup
