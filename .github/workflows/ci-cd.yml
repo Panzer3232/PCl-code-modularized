@@ -24,6 +24,8 @@ jobs:
           pip install -r req_new.txt
 
       - name: Run tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: pytest tests/
 
   docker:
