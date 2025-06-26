@@ -128,3 +128,6 @@ singularity exec --nv /work/your_username/pcl-train.simg conda run -n pcl_env py
 
 ```
    
+### Git Hooks
+
+Added git hooks which pre commit local test. If user pushes change in the repo; defined tests or any docker testing will be tested locally then committed to the repo.
