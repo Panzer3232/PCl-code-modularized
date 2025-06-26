@@ -10,6 +10,8 @@ import pcl_util
 import utils
 from config_data import DatasetConfig
 
+# Updated for feature
+
 class Resnet_H36m(nn.Module):
     def __init__(self,dataset_cfg: DatasetConfig, device, num_joints=32, use_pcl=False, use_resnet50=True, use_pretrain=True, focal_at_image_plane=True, 
     slant_compensation=True, use_resnet34=False):
